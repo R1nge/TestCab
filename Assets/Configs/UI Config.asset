@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f2217491d354a6cbf603eafd0d9daf1, type: 3}
   m_Name: UI Config
   m_EditorClassIdentifier: 
-  mainMenuUI: {fileID: 0}
+  mainMenuUI: {fileID: 3020724462099406495, guid: f5e20a3ef2f8b88449308daca58127ce, type: 3}
   inGameUI: {fileID: 0}
   gameOverUI: {fileID: 0}

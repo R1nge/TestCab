@@ -14,7 +14,7 @@ namespace Game
 
         public IGameState CreateGameInitState(GameStateMachine gameStateMachine)
         {
-            return new GameInitState();
+            return new GameInitState(_uiFactory);
         }
 
         public IGameState CreateGameStartedState(GameStateMachine gameStateMachine)
