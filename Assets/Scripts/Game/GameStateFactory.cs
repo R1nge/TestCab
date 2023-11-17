@@ -10,8 +10,8 @@ namespace Game
         private readonly CameraService _cameraService;
         private readonly PlayerSpawner _playerSpawner;
         private readonly UIFactory _uiFactory;
-        
-        private GameStateFactory(PlayerDataService playerDataService, CameraService cameraService,  PlayerSpawner playerSpawner, UIFactory uiFactory)
+
+        private GameStateFactory(PlayerDataService playerDataService, CameraService cameraService, PlayerSpawner playerSpawner, UIFactory uiFactory)
         {
             _playerDataService = playerDataService;
             _cameraService = cameraService;
@@ -31,7 +31,7 @@ namespace Game
 
         public IGameState CreateGameEndedState(GameStateMachine gameStateMachine)
         {
-            return new GameEndedState(_uiFactory);
+            return new GameEndedState(_playerDataService, _uiFactory);
         }
     }
 }

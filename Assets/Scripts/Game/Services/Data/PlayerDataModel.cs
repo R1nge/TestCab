@@ -1,4 +1,5 @@
 ﻿using System;
+using Unity.Properties;
 
 namespace Game.Services
 {
@@ -6,9 +7,9 @@ namespace Game.Services
     public class PlayerDataModel
     {
         private int _health;
-        private int _score;
+        private int _score, _highScore;
         public event Action<int> OnHealthChanged;
-        public event Action<int> OnScoreChanged;
+        public event Action<int> OnScoreChanged, OnHighScoreChanged;
 
         public int Health
         {
@@ -30,10 +31,24 @@ namespace Game.Services
             }
         }
 
-        public PlayerDataModel(int health, int score)
+        [CreateProperty]
+        public int HighScore
+        {
+            get => _highScore;
+            set
+            {
+                _highScore = value;
+                OnHighScoreChanged?.Invoke(_highScore);
+            }
+        }
+
+        public PlayerDataModel(int health, int score, int highScore)
         {
             Health = health;
             Score = score;
+            HighScore = highScore;
         }
+
+        public PlayerDataModel() { }
     }
 }

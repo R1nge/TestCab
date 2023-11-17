@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Game.Services
+﻿namespace Game.Services
 {
     public class PlayerDataService
     {

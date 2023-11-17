@@ -22,10 +22,11 @@ namespace Game.States
         public void Enter()
         {
             _playerDataService.Load();
-            Debug.Log(_playerSpawner);
             GameObject player = _playerSpawner.Spawn();
             _cameraService.Select(player.transform);
             _uiFactory.CreateInGameUI();
+            
+            _playerDataService.Save();
         }
 
         public void Exit() { }

@@ -1,4 +1,5 @@
-﻿using Game.Configs;
+﻿using System.IO;
+using Game.Configs;
 using Unity.Serialization.Json;
 using UnityEngine;
 
@@ -6,9 +7,9 @@ namespace Game.Services
 {
     public class PlayerDataProviderJson : IPlayerDataProvider
     {
-        private const string DATA_KEY = "PlayerData";
+        private static string DATA_PATH = Path.Combine(Application.persistentDataPath, "SaveData.json");
         private readonly ConfigProvider _configProvider;
-        
+
         public PlayerDataProviderJson(ConfigProvider configProvider)
         {
             _configProvider = configProvider;
@@ -16,18 +17,32 @@ namespace Game.Services
 
         public PlayerDataModel Load()
         {
+            Debug.Log(DATA_PATH);
+
             PlayerDataModel data;
 
-            string json = PlayerPrefs.GetString(DATA_KEY);
-
-            if (string.IsNullOrEmpty(json))
+            if (File.Exists(DATA_PATH))
             {
-                Debug.LogWarning("Data doesn't exist. Creating a new one");
-                data = new PlayerDataModel(_configProvider.PlayerConfig.Health, 0);
+                using (StreamReader reader = new(DATA_PATH))
+                {
+                    string json = reader.ReadToEnd();
+                    
+                    if (json == "{}")
+                    {
+                        Debug.LogWarning("Data doesn't exist. Creating a new one");
+                        data = new PlayerDataModel(_configProvider.PlayerConfig.Health, 0, 0);
+                    }
+                    else
+                    {
+                        data = JsonSerialization.FromJson<PlayerDataModel>(json);
+                        data.Health = _configProvider.PlayerConfig.Health;
+                    }
+                }
             }
             else
             {
-                data = JsonSerialization.FromJson<PlayerDataModel>(json);
+                Debug.LogWarning("Data doesn't exist. Creating a new one");
+                data = new PlayerDataModel(_configProvider.PlayerConfig.Health, 0, 0);
             }
 
             return data;
@@ -36,8 +51,7 @@ namespace Game.Services
         public void Save(PlayerDataModel data)
         {
             string json = JsonSerialization.ToJson(data);
-            PlayerPrefs.SetString(DATA_KEY, json);
-            PlayerPrefs.Save();
+            File.WriteAllText(DATA_PATH, json);
         }
     }
 }
