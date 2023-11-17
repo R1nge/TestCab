@@ -175,6 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiConfig: {fileID: 11400000, guid: c239f233d424e41458aa1b7f9b4116a7, type: 2}
+  playerConfig: {fileID: 11400000, guid: edb06a295372dd744a8be24e7221506a, type: 2}
 --- !u!1 &8828870271798980030
 GameObject:
   m_ObjectHideFlags: 0

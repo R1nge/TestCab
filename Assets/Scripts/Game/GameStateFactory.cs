@@ -1,14 +1,17 @@
 ﻿using Game.Factories;
+using Game.Services;
 using Game.States;
 
 namespace Game
 {
     public class GameStateFactory
     {
+        private readonly PlayerDataService _playerDataService;
         private readonly UIFactory _uiFactory;
         
-        private GameStateFactory(UIFactory uiFactory)
+        private GameStateFactory(PlayerDataService playerDataService, UIFactory uiFactory)
         {
+            _playerDataService = playerDataService;
             _uiFactory = uiFactory;
         }
 
@@ -19,7 +22,7 @@ namespace Game
 
         public IGameState CreateGameStartedState(GameStateMachine gameStateMachine)
         {
-            return new GameStartedState(_uiFactory);
+            return new GameStartedState(_playerDataService, _uiFactory);
         }
 
         public IGameState CreateGameEndedState(GameStateMachine gameStateMachine)

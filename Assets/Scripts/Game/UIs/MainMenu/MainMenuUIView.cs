@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using Zenject;
 
-namespace Game.UIs
+namespace Game.UIs.MainMenu
 {
     public class MainMenuUIView : MonoBehaviour
     {

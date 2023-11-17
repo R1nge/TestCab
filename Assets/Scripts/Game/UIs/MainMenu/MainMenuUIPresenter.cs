@@ -1,4 +1,4 @@
-﻿namespace Game.UIs
+﻿namespace Game.UIs.MainMenu
 {
     public class MainMenuUIPresenter
     {
