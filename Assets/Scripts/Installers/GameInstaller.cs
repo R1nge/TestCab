@@ -21,6 +21,8 @@ namespace Installers
             
             Container.Bind<GameStateFactory>().AsSingle();
             Container.Bind<GameStateMachine>().AsSingle();
+            
+            Container.Bind<ScoreService>().AsSingle();
         }
     }
 }
