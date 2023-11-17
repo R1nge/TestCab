@@ -1,10 +1,16 @@
-﻿using Game.States;
+﻿using Game.Factories;
+using Game.States;
 
 namespace Game
 {
     public class GameStateFactory
     {
-        private GameStateFactory() { }
+        private readonly UIFactory _uiFactory;
+        
+        private GameStateFactory(UIFactory uiFactory)
+        {
+            _uiFactory = uiFactory;
+        }
 
         public IGameState CreateGameInitState(GameStateMachine gameStateMachine)
         {
@@ -13,12 +19,12 @@ namespace Game
 
         public IGameState CreateGameStartedState(GameStateMachine gameStateMachine)
         {
-            return new GameStartedState();
+            return new GameStartedState(_uiFactory);
         }
 
         public IGameState CreateGameEndedState(GameStateMachine gameStateMachine)
         {
-            return new GameEndedState();
+            return new GameEndedState(_uiFactory);
         }
     }
 }

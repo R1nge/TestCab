@@ -1,15 +1,22 @@
-﻿namespace Game.States
+﻿using Game.Factories;
+
+namespace Game.States
 {
     public class GameStartedState : IGameState
 
     {
-        public void Enter()
+        private readonly UIFactory _uiFactory;
+
+        public GameStartedState(UIFactory uiFactory)
         {
-            
+            _uiFactory = uiFactory;
         }
 
-        public void Exit()
+        public void Enter()
         {
+            _uiFactory.CreateInGameUI();
         }
+
+        public void Exit() { }
     }
 }

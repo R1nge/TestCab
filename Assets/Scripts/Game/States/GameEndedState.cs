@@ -1,15 +1,21 @@
-﻿namespace Game.States
+﻿using Game.Factories;
+
+namespace Game.States
 {
     public class GameEndedState : IGameState
     {
-        public void Enter()
+        private readonly UIFactory _uiFactory;
+
+        public GameEndedState(UIFactory uiFactory)
         {
-            throw new System.NotImplementedException();
+            _uiFactory = uiFactory;
         }
 
-        public void Exit()
+        public void Enter()
         {
-            throw new System.NotImplementedException();
+            _uiFactory.CreateGameOverUI();
         }
+
+        public void Exit() { }
     }
 }
