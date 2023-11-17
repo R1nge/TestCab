@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: UI Config
   m_EditorClassIdentifier: 
   mainMenuUI: {fileID: 3020724462099406495, guid: f5e20a3ef2f8b88449308daca58127ce, type: 3}
-  inGameUI: {fileID: 0}
+  inGameUI: {fileID: 7697933638946868635, guid: 02ca5d3b7124b4543b18b2de93305e47, type: 3}
   gameOverUI: {fileID: 0}

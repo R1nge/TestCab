@@ -7,7 +7,7 @@ namespace Game.UIs.InGame
 {
     public class InGameUIView : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI scoreText, healthText;
+        [SerializeField] private TextMeshProUGUI healthText, scoreText;
         private InGameUIPresenter _inGameUIPresenter;
         private PlayerDataService _playerDataService;
 
@@ -19,6 +19,8 @@ namespace Game.UIs.InGame
             _inGameUIPresenter = new InGameUIPresenter(scoreText, healthText);
             _playerDataService.Model.OnScoreChanged += UpdateScore;
             _playerDataService.Model.OnHealthChanged += UpdateHealth;
+            UpdateHealth(_playerDataService.Model.Health);
+            UpdateScore(_playerDataService.Model.Score);
         }
 
         private void UpdateHealth(int health) => _inGameUIPresenter.UpdateHealth(health);
