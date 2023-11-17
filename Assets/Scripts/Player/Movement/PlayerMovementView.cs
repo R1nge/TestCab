@@ -1,51 +1,51 @@
-﻿using UnityEngine;
+﻿using Game.Services;
+using Player.Movement;
+using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
+using Zenject;
 
-namespace Player.Movement
+public class PlayerMovementView : MonoBehaviour
 {
-    public class PlayerMovementView : MonoBehaviour
-    {
-        [SerializeField] private LayerMask ignore;
-        [SerializeField] private NavMeshAgent navMeshAgent;
-        [SerializeField] private Camera playerCamera;
-        private PlayerMovementController _playerMovementController;
+    [SerializeField] private LayerMask ignore;
+    [SerializeField] private NavMeshAgent navMeshAgent;
+    private PlayerMovementController _playerMovementController;
+    private CameraService _cameraService;
 
-        private void Awake()
+    [Inject]
+    private void Inject(CameraService cameraService)
+    {
+        _cameraService = cameraService;
+    }
+
+    private void Awake()
+    {
+        _playerMovementController = new PlayerMovementController(navMeshAgent);
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
         {
-            _playerMovementController = new PlayerMovementController(navMeshAgent);
+            if (!EventSystem.current.IsPointerOverGameObject())
+            {
+                _cameraService.RaycastScreenToRay(Input.mousePosition, out RaycastHit hit, Mathf.Infinity, layerMask: ~ignore);
+                
+                _playerMovementController.MoveTo(hit.point);
+            }
         }
 
-        private void Update()
+        if (Input.touchCount > 0)
         {
-            if (Input.GetMouseButtonDown(0))
+            Touch touch = Input.GetTouch(0);
+
+            if (!EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
             {
-                if (!EventSystem.current.IsPointerOverGameObject())
+                if (touch.phase == TouchPhase.Began)
                 {
-                    Ray screenPointToRay = playerCamera.ScreenPointToRay(Input.mousePosition);
-                
-                    if (Physics.Raycast(screenPointToRay, out RaycastHit hit, Mathf.Infinity, layerMask: ~ignore))
-                    {
-                        _playerMovementController.MoveTo(hit.point);
-                    }
-                }
-            }
-
-            if (Input.touchCount > 0)
-            {
-                Touch touch = Input.GetTouch(0);
-
-                if (!EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
-                {
-                    if (touch.phase == TouchPhase.Began)
-                    {
-                        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
-
-                        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, layerMask: ~ignore))
-                        {
-                            _playerMovementController.MoveTo(hit.point);
-                        }
-                    }
+                    _cameraService.RaycastScreenToRay(Input.GetTouch(0).position, out RaycastHit hit, Mathf.Infinity, layerMask: ~ignore);
+                    
+                    _playerMovementController.MoveTo(hit.point);
                 }
             }
         }

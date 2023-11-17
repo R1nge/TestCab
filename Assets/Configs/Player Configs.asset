@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a2f2851e2e440878a1ec0c31c6b4edf, type: 3}
   m_Name: Player Configs
   m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 5491401939253995489, guid: 8b75ff4551daf004d8cb0788bace0021, type: 3}
   health: 3
